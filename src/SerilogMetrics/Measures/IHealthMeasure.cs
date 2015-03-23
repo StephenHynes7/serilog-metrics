@@ -19,7 +19,7 @@ namespace SerilogMetrics
 	/// Executes a heath check and reports the effect of it. 
 	/// </summary>
 	public interface IHealthMeasure: IMeasure{
-	
+
 	}
 
 

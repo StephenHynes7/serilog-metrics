@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Serilog;
 using Serilog.Enrichers;
 using Serilog.Events;
+using System.Diagnostics;
 
 namespace SerilogMetrics.Samples.Console
 {
@@ -68,6 +69,18 @@ namespace SerilogMetrics.Samples.Console
 			counter.Increment();
 			counter.Increment();
 			counter.Decrement();
+
+            PerformanceCounter cpuCounter;
+
+            cpuCounter = new PerformanceCounter();
+
+            cpuCounter.CategoryName = "Processor";
+            cpuCounter.CounterName = "% Processor Time";
+            cpuCounter.InstanceName = "_Total";
+
+            var cpu_usage = logger.SystemMeasure("cpuCounter",cpuCounter, LogEventLevel.Information);
+
+
 
 			System.Console.WriteLine("Press a key to exit.");
 			System.Console.ReadKey(true);

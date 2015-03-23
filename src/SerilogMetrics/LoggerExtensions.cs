@@ -16,6 +16,8 @@ using System;
 using Serilog.Events;
 using SerilogMetrics;
 using System.Collections.Concurrent;
+using SerilogMetrics.Measures;
+using System.Diagnostics;
 
 // Analysis disable once CheckNamespace
 namespace Serilog
@@ -218,6 +220,19 @@ namespace Serilog
 
 			return new HealthMeasure (logger, name, healthFunction, healthyLevel, unHealthyLevel, template);
 		}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SystemMeasure"/> class.
+        /// </summary>
+        public static ISystemMeasure SystemMeasure(
+            this ILogger logger,
+            string name,
+            PerformanceCounter performanceCounter,
+            LogEventLevel level = LogEventLevel.Information)
+        {
+			if (string.IsNullOrWhiteSpace(name))
+				throw new ArgumentNullException("name");
+            return new SystemMeasure(logger, level, name, performanceCounter);
+        }
 
     }
 
